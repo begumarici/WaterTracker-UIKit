@@ -15,21 +15,32 @@ class ViewController: UIViewController {
     @IBOutlet weak var dropButton: UIButton!
     
     var currentIntake: Float = 0
-    let totalIntakeGoal: Float = 2000
+    var totalIntakeGoal: Float {
+        return Float(UserDefaults.standard.integer(forKey: "dailyGoal") == 0 ? 2000 : UserDefaults.standard.integer(forKey: "dailyGoal"))
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        if UserDefaults.standard.value(forKey: "dailyGoal") == nil {
+            UserDefaults.standard.set(2000, forKey: "dailyGoal")
+        }
+        
         if let savedIntake = UserDefaults.standard.value(forKey: "currentIntake") as? Float {
             currentIntake = savedIntake
         }
         updateUI(animated: false)
         NotificationCenter.default.addObserver(self, selector: #selector(handleReset), name: Notification.Name("didResetIntake"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDailyGoalUpdate), name: Notification.Name("didUpdateDailyGoal"), object: nil)
     }
     
     @objc func handleReset() {
         currentIntake = 0
+        updateUI(animated: true)
+    }
+    
+    @objc func handleDailyGoalUpdate() {
         updateUI(animated: true)
     }
     

@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -99,7 +100,7 @@
             </objects>
             <point key="canvasLocation" x="1056.7164179104477" y="4.805491990846682"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Settings-->
         <scene sceneID="GKw-28-DBM">
             <objects>
                 <viewController id="wyM-G9-3pH" customClass="SettingsViewController" customModule="WaterTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -107,31 +108,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxv-6e-vYB">
-                                <rect key="frame" x="168" y="215" width="68" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Reset"/>
-                                <connections>
-                                    <action selector="resetButtonTapped:" destination="wyM-G9-3pH" eventType="touchUpInside" id="hOp-Be-pBy"/>
-                                </connections>
-                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GmO-f6-wta">
+                                <rect key="frame" x="0.0" y="106" width="402" height="768"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BasicCell" textLabel="drl-3q-VGM" detailTextLabel="TgL-up-dBk" style="IBUITableViewCellStyleSubtitle" id="kLh-me-Z0D">
+                                        <rect key="frame" x="0.0" y="50" width="402" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kLh-me-Z0D" id="MIt-WT-Hd9">
+                                            <rect key="frame" x="0.0" y="0.0" width="402" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="drl-3q-VGM">
+                                                    <rect key="frame" x="20" y="6.0000000000000009" width="25" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TgL-up-dBk">
+                                                    <rect key="frame" x="19.999999999999996" y="22.333333333333336" width="43.666666666666664" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7jQ-Ta-vId"/>
                         <color key="backgroundColor" red="0.01540993805" green="0.20912083240000001" blue="0.4360661301" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="0.046772837529804212" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="kxv-6e-vYB" firstAttribute="top" secondItem="7jQ-Ta-vId" secondAttribute="top" constant="109" id="L1O-Az-U40"/>
-                            <constraint firstItem="kxv-6e-vYB" firstAttribute="leading" secondItem="7jQ-Ta-vId" secondAttribute="leading" constant="168" id="PSj-OB-cxD"/>
+                            <constraint firstItem="GmO-f6-wta" firstAttribute="top" secondItem="7jQ-Ta-vId" secondAttribute="top" id="0L8-dw-c6J"/>
+                            <constraint firstItem="GmO-f6-wta" firstAttribute="trailing" secondItem="7jQ-Ta-vId" secondAttribute="trailing" id="6UM-gM-HxS"/>
+                            <constraint firstItem="GmO-f6-wta" firstAttribute="leading" secondItem="7jQ-Ta-vId" secondAttribute="leading" id="BC0-1j-X6S"/>
+                            <constraint firstAttribute="bottom" secondItem="GmO-f6-wta" secondAttribute="bottom" id="hUL-FZ-y6a"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="weA-6f-IUF"/>
+                    <navigationItem key="navigationItem" title="Settings" id="weA-6f-IUF"/>
                     <connections>
-                        <outlet property="resetButton" destination="kxv-6e-vYB" id="mGb-oH-ORI"/>
+                        <outlet property="tableView" destination="GmO-f6-wta" id="Fv9-zQ-k5O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0e7-Tz-b8F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1763" y="5"/>
+            <point key="canvasLocation" x="1762.686567164179" y="4.805491990846682"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Pcw-9V-lRi">
@@ -141,6 +167,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1OX-8K-yXr">
                         <rect key="frame" x="0.0" y="62" width="402" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -155,5 +185,8 @@
     <resources>
         <image name="drop.fill" catalog="system" width="96" height="128"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
