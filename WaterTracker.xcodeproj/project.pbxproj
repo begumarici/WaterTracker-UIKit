@@ -14,7 +14,7 @@
 		548905272E0AD37C00D6F80F /* Exceptions for "WaterTracker" folder in "WaterTracker" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				"Supporting Files/Info.plist",
 			);
 			target = 548905142E0AD37A00D6F80F /* WaterTracker */;
 		};
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y633T42J9Y;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WaterTracker/Info.plist;
+				INFOPLIST_FILE = "WaterTracker/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -175,7 +175,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y633T42J9Y;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WaterTracker/Info.plist;
+				INFOPLIST_FILE = "WaterTracker/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
