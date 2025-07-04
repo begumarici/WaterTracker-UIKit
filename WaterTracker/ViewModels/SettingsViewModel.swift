@@ -21,23 +21,23 @@ class SettingsViewModel {
     
     var dailyGoal: Int {
         get {
-            let goal = UserDefaults.standard.integer(forKey: "dailyGoal")
-            return goal == 0 ? 2000 : goal
+            let goal = UserDefaults.standard.integer(forKey: UserDefaultsKeys.dailyGoal)
+            return goal == 0 ? defaultGoal : goal
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "dailyGoal")
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.dailyGoal)
         }
     }
     
     func resetProgress() {
-        UserDefaults.standard.set(0, forKey: "currentIntake")
-        NotificationCenter.default.post(name: .init("didResetIntake"), object: nil)
+        UserDefaults.standard.set(0, forKey: UserDefaultsKeys.currentIntake)
+        NotificationCenter.default.post(name: .didResetIntake, object: nil)
     }
     
     func updateDailyGoal(to newGoal: Int) {
         self.dailyGoal = newGoal
         resetProgress()
-        NotificationCenter.default.post(name: .init("didUpdateDailyGoal"), object: nil)
+        NotificationCenter.default.post(name: .didUpdateDailyGoal, object: nil)
     }
     
     func generateSettingItems(resetAction: @escaping () -> Void, goalAction: @escaping () -> Void)-> [SettingItem] {

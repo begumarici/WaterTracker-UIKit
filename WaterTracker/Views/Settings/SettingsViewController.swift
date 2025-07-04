@@ -13,8 +13,6 @@ class SettingsViewController: UIViewController {
     
     var settings: [SettingItem] = []
     var viewModel = SettingsViewModel()
-    var selectedPickerRow = 0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +39,7 @@ class SettingsViewController: UIViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { _ in
-            UserDefaults.standard.set(0, forKey: "currentIntake")
-            NotificationCenter.default.post(name: Notification.Name("didResetIntake"), object: nil)
+            self.viewModel.resetProgress()
         }))
         present(alert, animated: true)
     }
@@ -72,7 +69,8 @@ class SettingsViewController: UIViewController {
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Set", style: .default, handler: { _ in
-            let newGoal = self.viewModel.pickerValues[self.selectedPickerRow]
+            let selectedRow = picker.selectedRow(inComponent: 0)
+            let newGoal = self.viewModel.pickerValues[selectedRow]
             self.viewModel.updateDailyGoal(to: newGoal)
             self.reloadSettings()
         }))
