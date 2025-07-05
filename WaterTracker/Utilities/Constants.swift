@@ -10,6 +10,9 @@ import Foundation
 enum UserDefaultsKeys {
     static let dailyGoal = "dailyGoal"
     static let currentIntake = "currentIntake"
+    static let lastOpenedDate = "lastOpenedDate"
+    static let lastIntakeDate = "lastIntakeDate"
+    static let didScheduleNotifications = "didScheduleNotifications"
 }
 
 enum NotificationNames {

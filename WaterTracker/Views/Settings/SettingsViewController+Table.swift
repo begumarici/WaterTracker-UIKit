@@ -15,19 +15,23 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = settings[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
-        cell.backgroundColor = .white
-        cell.textLabel?.text = item.title
-        cell.detailTextLabel?.text = item.detail
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 15)
-        cell.detailTextLabel?.textColor = .darkGray
-        cell.textLabel?.textColor = .black
-        cell.accessoryType = item.accessory
+        configure(cell: cell, with: item)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         settings[indexPath.row].action?()
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func configure(cell: UITableViewCell, with item: SettingItem) {
+        cell.backgroundColor = .white
+        cell.textLabel?.text = item.title
+        cell.detailTextLabel?.text = item.detail
+        cell.textLabel?.font = AppFont.semiBold(17)
+        cell.textLabel?.textColor = .black
+        cell.detailTextLabel?.font = AppFont.light(15)
+        cell.detailTextLabel?.textColor = UIColor.darkGray.withAlphaComponent(0.7)
+        cell.accessoryType = item.accessory
     }
 }

@@ -31,6 +31,7 @@ class SettingsViewModel {
     
     func resetProgress() {
         UserDefaults.standard.set(0, forKey: UserDefaultsKeys.currentIntake)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastIntakeDate)
         NotificationCenter.default.post(name: .didResetIntake, object: nil)
     }
     

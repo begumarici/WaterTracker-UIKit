@@ -19,16 +19,37 @@ class WaterViewModel {
     var progress: Float {
         return min(waterData.currentIntake / waterData.dailyGoal, 1.0)
     }
+    var lastIntakeDate: Date? {
+        UserDefaults.standard.object(forKey: UserDefaultsKeys.lastIntakeDate) as? Date
+    }
     
     init() {
+        Self.resetIfNewDay()
+        
         let goal = Float(UserDefaults.standard.integer(forKey: UserDefaultsKeys.dailyGoal))
         let intake = UserDefaults.standard.float(forKey: UserDefaultsKeys.currentIntake)
         self.waterData = WaterData(currentIntake: intake, dailyGoal: goal == 0 ? defaultGoal : goal)
     }
     
+    private static func resetIfNewDay() {
+        
+        let today = Calendar.current.startOfDay(for: Date())
+        
+        if let lastDate = UserDefaults.standard.object(forKey: UserDefaultsKeys.lastOpenedDate) as? Date {
+            let lastOpenedDay = Calendar.current.startOfDay(for: lastDate)
+            if lastOpenedDay != today {
+                UserDefaults.standard.set(0.0, forKey: UserDefaultsKeys.currentIntake)
+                NotificationCenter.default.post(name: .didResetIntake, object: nil)
+                UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastIntakeDate)
+            }
+        }
+        UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastOpenedDate)
+        
+    }
     func increaseIntake(by amount: Float = 250) {
         waterData.currentIntake = min(waterData.currentIntake + amount, waterData.dailyGoal)
         UserDefaults.standard.set(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
+        UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastIntakeDate)
     }
     
     func resetIntake() {

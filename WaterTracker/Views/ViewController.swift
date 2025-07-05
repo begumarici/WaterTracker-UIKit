@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var goalBarView: UIView!
     @IBOutlet weak var goalBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var goalMlLabel: UILabel!
+    @IBOutlet weak var lastIntakeLabel: UILabel!
+    @IBOutlet weak var percentageSymbolLabel: UILabel!
     
     var viewModel = WaterViewModel()
     
@@ -25,6 +27,14 @@ class ViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateOnReset), name: .didResetIntake, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateOnGoalChange), name: .didUpdateDailyGoal, object: nil)
+        
+        NotificationManager.shared.requestPermission { granted in
+                if granted {
+                    NotificationManager.shared.scheduleWaterRemindersIfNeeded()
+                } else {
+                    print("Notification permission not granted.")
+                }
+            }
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,6 +74,15 @@ class ViewController: UIViewController {
         mlLabel.text = "\(Int(intake))mL"
         goalMlLabel.text = "\(Int(viewModel.waterData.dailyGoal))mL"
         
+        if let date = viewModel.lastIntakeDate {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "tr_TR")
+            formatter.dateFormat = "HH:mm"
+            lastIntakeLabel.text = "Last intake: \(formatter.string(from: date))"
+        } else {
+            lastIntakeLabel.text = "you haven't drunk any water today."
+        }
+        
         let updateBlock = {
             self.view.layoutIfNeeded()
             
@@ -76,6 +95,14 @@ class ViewController: UIViewController {
     func setupUI() {
         progressBarView.layer.cornerRadius = 5
         goalBarView.layer.cornerRadius = 5
+        
+        mlLabel.font = AppFont.bold(17)
+        goalMlLabel.font = AppFont.bold(17)
+
+        percentageLabel.font = AppFont.black(100)
+        percentageSymbolLabel.font = AppFont.extraBold(30)
+
+        lastIntakeLabel.font = AppFont.extraBold(17)
     }
     
     deinit {
