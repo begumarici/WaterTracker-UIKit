@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var goalMlLabel: UILabel!
     @IBOutlet weak var lastIntakeLabel: UILabel!
     @IBOutlet weak var percentageSymbolLabel: UILabel!
+    @IBOutlet weak var waveView: WaveView!
+    @IBOutlet weak var waveViewHeightConstraint: NSLayoutConstraint!
     
     var viewModel = WaterViewModel()
     
@@ -55,6 +57,7 @@ class ViewController: UIViewController {
     @IBAction func waterButtonTapped(_ sender: Any) {
         viewModel.increaseIntake()
         updateUI(animated: true)
+        waveView.boostWaveSpeedTemporarily()
     }
     
     func updateUI(animated: Bool) {
@@ -68,6 +71,7 @@ class ViewController: UIViewController {
             heightConstraint.constant = newHeight
         }
         
+        waveViewHeightConstraint.constant = newHeight
         goalBarHeightConstraint.constant = maxHeight
         
         percentageLabel.text = "\(Int(progress * 100))"
