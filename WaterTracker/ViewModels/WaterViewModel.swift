@@ -60,6 +60,18 @@ class WaterViewModel {
         }
     }
     
+    func decreaseIntake(by amount: Float = 250) {
+        if waterData.currentIntake - amount < 0 {
+            return
+        }
+        let newIntake = min(waterData.currentIntake - amount, waterData.dailyGoal)
+        
+        if newIntake < waterData.currentIntake {
+            waterData.currentIntake = newIntake
+            UserDefaults.standard.set(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
+        }
+    }
+    
     func resetIntake() {
         waterData.currentIntake = defaultIntake
         UserDefaults.standard.set(defaultIntake, forKey: UserDefaultsKeys.currentIntake)

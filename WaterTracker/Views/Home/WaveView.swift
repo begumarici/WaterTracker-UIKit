@@ -66,16 +66,21 @@ class WaveView: UIView {
         let baseY = waveHeight + 5
 
         path.move(to: CGPoint(x: 0, y: baseY))
+
         for x in stride(from: 0, through: width, by: 1) {
             let y = waveHeight * sin((x / wavelength + phase) * .pi * 2) + baseY
             path.addLine(to: CGPoint(x: x, y: y))
         }
-        path.addLine(to: CGPoint(x: width, y: height))
-        path.addLine(to: CGPoint(x: 0, y: height))
+        
+        let bottomY = self.superview?.bounds.height ?? height
+
+        path.addLine(to: CGPoint(x: width, y: bottomY))
+        path.addLine(to: CGPoint(x: 0, y: bottomY))
         path.close()
+    
         return path
     }
-
+    
     func boostWaveSpeedTemporarily() {
         speedAnimationTimer?.invalidate()
         isAnimatingSpeed = false

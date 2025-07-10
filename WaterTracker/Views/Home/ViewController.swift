@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var percentageSymbolLabel: UILabel!
     @IBOutlet weak var waveView: WaveView!
     @IBOutlet weak var waveViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var undoButton: UIButton!
     
     var viewModel = WaterViewModel()
     
@@ -56,6 +57,12 @@ class ViewController: UIViewController {
     
     @IBAction func waterButtonTapped(_ sender: Any) {
         viewModel.increaseIntake()
+        updateUI(animated: true)
+        waveView.boostWaveSpeedTemporarily()
+    }
+    
+    @IBAction func undoButtonTapped(_ sender: Any) {
+        viewModel.decreaseIntake()
         updateUI(animated: true)
         waveView.boostWaveSpeedTemporarily()
     }
