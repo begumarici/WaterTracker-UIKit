@@ -45,6 +45,29 @@ class SettingsViewModel {
         }
     }
     
+    var notificationsEnabled: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: UserDefaultsKeys.notificationsEnabled)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.notificationsEnabled)
+            if newValue {
+                NotificationManager.shared.requestPermission { granted in
+                    if granted {
+                        NotificationManager.shared.scheduleWaterRemindersIfNeeded()
+                    } else {
+                        DispatchQueue.main.async {
+                            self.notificationsEnabled = false
+                        }
+                    }
+                }
+            } else {
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                UserDefaults.standard.set(false, forKey: UserDefaultsKeys.didScheduleNotifications)
+            }
+        }
+    }
+    
     func resetProgress() {
         UserDefaults.standard.set(0, forKey: UserDefaultsKeys.currentIntake)
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastIntakeDate)
@@ -57,13 +80,4 @@ class SettingsViewModel {
         NotificationCenter.default.post(name: .didUpdateDailyGoal, object: nil)
     }
     
-    func generateSettingItems(resetAction: @escaping () -> Void,
-                              goalAction: @escaping () -> Void,
-                              cupSizeAction: @escaping ()-> Void ) -> [SettingItem] {
-        return [
-            SettingItem(title: "Reset Water Intake", detail: nil, accessory: .none, action: resetAction),
-            SettingItem(title: "Daily Goal", detail: "\(dailyGoal)mL", accessory: .disclosureIndicator, action: goalAction),
-            SettingItem(title: "Cup Size", detail: "\(cupSize)mL", accessory: .disclosureIndicator, action: cupSizeAction)
-        ]
-    }
 }

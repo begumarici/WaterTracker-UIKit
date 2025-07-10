@@ -14,6 +14,7 @@ enum UserDefaultsKeys {
     static let lastIntakeDate = "lastIntakeDate"
     static let didScheduleNotifications = "didScheduleNotifications"
     static let cupSize = "cupSize"
+    static let notificationsEnabled = "notificationsEnabled"
 }
 
 enum NotificationNames {

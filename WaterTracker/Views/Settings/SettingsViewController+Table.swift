@@ -14,6 +14,22 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = settings[indexPath.row]
+        
+        if item.title == "Notifications" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell") ??
+                       UITableViewCell(style: .subtitle, reuseIdentifier: "SwitchCell")
+            
+            configure(cell: cell, with: item)
+            cell.selectionStyle = .none
+            
+            let toggle = UISwitch()
+            toggle.isOn = viewModel.notificationsEnabled
+            toggle.addTarget(self, action: #selector(notificationSwitchChanged(_:)), for: .valueChanged)
+            cell.accessoryView = toggle
+            
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
         configure(cell: cell, with: item)
         return cell
@@ -22,6 +38,12 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         settings[indexPath.row].action?()
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    @objc func notificationSwitchChanged(_ sender: UISwitch) {
+        viewModel.notificationsEnabled = sender.isOn
+        if !sender.isOn {
+        }
     }
     
     private func configure(cell: UITableViewCell, with item: SettingItem) {

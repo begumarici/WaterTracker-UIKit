@@ -22,14 +22,20 @@ class SettingsViewController: UIViewController {
     }
     
     private func reloadSettings() {
-        settings = viewModel.generateSettingItems(
-            resetAction: {[weak self] in self?.showResetAlert() },
-            goalAction: { [weak self] in self?.showGoalPicker() },
-            cupSizeAction: { [weak self] in self?.showCupSizePicker() }
-        )
+        settings = [
+            SettingItem(title: "Reset Water Intake", detail: nil, accessory: .none, action: { [weak self] in
+                self?.showResetAlert()
+            }),
+            SettingItem(title: "Daily Goal", detail: "\(viewModel.dailyGoal)mL", accessory: .disclosureIndicator, action: { [weak self] in
+                self?.showGoalPicker()
+            }),
+            SettingItem(title: "Cup Size", detail: "\(viewModel.cupSize)mL", accessory: .disclosureIndicator, action: { [weak self] in
+                self?.showCupSizePicker()
+            }),
+            SettingItem(title: "Notifications", detail: "Receive daily reminders.", accessory: .none, action: nil)
+        ]
         tableView.reloadData()
-    }
-    
+    }    
 
     func showResetAlert() {
         let alert = UIAlertController(title: "Reset Progress",
