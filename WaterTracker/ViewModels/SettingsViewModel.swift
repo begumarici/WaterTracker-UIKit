@@ -15,8 +15,14 @@ class SettingsViewModel {
     private let pickerMin = 1000
     private let pickerMax = 5000
     
+    private let defaultCupSize = 250
+    
     var pickerValues: [Int] {
         Array(stride(from: pickerMin, through: pickerMax, by: pickerStep))
+    }
+    
+    var cupSizeValues: [Int] {
+        return [100, 150, 200, 250, 300, 350, 400, 500]
     }
     
     var dailyGoal: Int {
@@ -26,6 +32,16 @@ class SettingsViewModel {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.dailyGoal)
+        }
+    }
+    
+    var cupSize: Int {
+        get {
+            let value = UserDefaults.standard.integer(forKey: UserDefaultsKeys.cupSize)
+            return value == 0 ? defaultCupSize : value
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.cupSize)
         }
     }
     
@@ -41,10 +57,13 @@ class SettingsViewModel {
         NotificationCenter.default.post(name: .didUpdateDailyGoal, object: nil)
     }
     
-    func generateSettingItems(resetAction: @escaping () -> Void, goalAction: @escaping () -> Void)-> [SettingItem] {
+    func generateSettingItems(resetAction: @escaping () -> Void,
+                              goalAction: @escaping () -> Void,
+                              cupSizeAction: @escaping ()-> Void ) -> [SettingItem] {
         return [
             SettingItem(title: "Reset Water Intake", detail: nil, accessory: .none, action: resetAction),
-            SettingItem(title: "Daily Goal", detail: "\(dailyGoal)mL", accessory: .disclosureIndicator, action: goalAction)
+            SettingItem(title: "Daily Goal", detail: "\(dailyGoal)mL", accessory: .disclosureIndicator, action: goalAction),
+            SettingItem(title: "Cup Size", detail: "\(cupSize)mL", accessory: .disclosureIndicator, action: cupSizeAction)
         ]
     }
 }

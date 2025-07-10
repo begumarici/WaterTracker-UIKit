@@ -24,7 +24,8 @@ class SettingsViewController: UIViewController {
     private func reloadSettings() {
         settings = viewModel.generateSettingItems(
             resetAction: {[weak self] in self?.showResetAlert() },
-            goalAction: { [weak self] in self?.showGoalPicker() }
+            goalAction: { [weak self] in self?.showGoalPicker() },
+            cupSizeAction: { [weak self] in self?.showCupSizePicker() }
         )
         tableView.reloadData()
     }
@@ -72,6 +73,29 @@ class SettingsViewController: UIViewController {
             self.reloadSettings()
         }))
 
+        present(alert, animated: true)
+    }
+    
+    func showCupSizePicker() {
+        let alert = UIAlertController(title: "Select Cup Size", message: "\n\n\n\n\n", preferredStyle: .alert)
+        let picker = UIPickerView(frame: CGRect(x: 5, y: 20, width: 250, height: 140))
+        
+        picker.dataSource = self
+        picker.delegate = self
+        picker.tag = 1
+        let selected = viewModel.cupSizeValues.firstIndex(of: viewModel.cupSize) ?? 0
+        picker.selectRow(selected, inComponent: 0, animated: true)
+        
+        alert.view.addSubview(picker)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Set", style: .default, handler: { _ in
+            let selectedRow = picker.selectedRow(inComponent: 0)
+            let newValue = self.viewModel.cupSizeValues[selectedRow]
+            self.viewModel.cupSize = newValue
+            self.reloadSettings()
+        }))
+        
         present(alert, animated: true)
     }
     

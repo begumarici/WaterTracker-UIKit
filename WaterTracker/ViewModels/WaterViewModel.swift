@@ -14,7 +14,11 @@ class WaterViewModel {
     
     private let defaultGoal: Float = 2000
     private let defaultIntake: Float = 0
-    private let defaultIntakeStep: Float = 250
+    
+    private var cupSize: Float {
+        let stored = UserDefaults.standard.integer(forKey: UserDefaultsKeys.cupSize)
+        return stored == 0 ? 250 : Float(stored)
+    }
     
     var progress: Float {
         return min(waterData.currentIntake / waterData.dailyGoal, 1.0)
@@ -46,13 +50,14 @@ class WaterViewModel {
         UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastOpenedDate)
         
     }
-    func increaseIntake(by amount: Float = 250) {
+    func increaseIntake(by amount: Float? = nil) {
         if waterData.currentIntake >= waterData.dailyGoal {
             return
         }
 
-        let newIntake = min(waterData.currentIntake + amount, waterData.dailyGoal)
-        
+        let intakeAmount = amount ?? cupSize
+        let newIntake = min(waterData.currentIntake + intakeAmount, waterData.dailyGoal)
+
         if newIntake > waterData.currentIntake {
             waterData.currentIntake = newIntake
             UserDefaults.standard.set(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
@@ -60,12 +65,13 @@ class WaterViewModel {
         }
     }
     
-    func decreaseIntake(by amount: Float = 250) {
-        if waterData.currentIntake - amount < 0 {
+    func decreaseIntake(by amount: Float? = nil) {
+        let intakeAmount = amount ?? cupSize
+        if waterData.currentIntake - intakeAmount < 0 {
             return
         }
-        let newIntake = min(waterData.currentIntake - amount, waterData.dailyGoal)
-        
+        let newIntake = min(waterData.currentIntake - intakeAmount, waterData.dailyGoal)
+
         if newIntake < waterData.currentIntake {
             waterData.currentIntake = newIntake
             UserDefaults.standard.set(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)

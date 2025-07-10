@@ -11,11 +11,16 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int { return 1 }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        viewModel.pickerValues.count
+        if pickerView.tag == 1 {
+            return viewModel.cupSizeValues.count
+        } else {
+            return viewModel.pickerValues.count
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "\(viewModel.pickerValues[row])ml"
+        let value = (pickerView.tag == 1) ? viewModel.cupSizeValues[row] : viewModel.pickerValues[row]
+        return "\(value) mL"
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
