@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Water Tracker-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WaterTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,7 +51,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="" cornerStyle="capsule">
                                     <imageReference key="image" image="drop.fill" catalog="system" symbolScale="large"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="baseBackgroundColor" red="0.32129043340000002" green="0.55658131840000002" blue="0.94772952799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="baseBackgroundColor" red="0.32156862745098036" green="0.55686274509803924" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="waterButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tgU-Pt-pKT"/>
@@ -121,7 +121,7 @@
                             <constraint firstItem="OE3-yR-tzu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="170" id="y2A-uv-Bdf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ob1-2s-Gn8">
+                    <navigationItem key="navigationItem" title="Water Tracker" largeTitleDisplayMode="always" id="ob1-2s-Gn8">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="gearshape.fill" catalog="system" id="JK0-Wh-7JZ">
                             <color key="tintColor" red="0.32129043340000002" green="0.55658131840000002" blue="0.94772952799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -188,7 +188,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7jQ-Ta-vId"/>
-                        <color key="backgroundColor" red="0.01540993805" green="0.20912083240000001" blue="0.4360661301" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="1" green="0.046772837529804212" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="GmO-f6-wta" firstAttribute="top" secondItem="7jQ-Ta-vId" secondAttribute="top" id="0L8-dw-c6J"/>
@@ -214,9 +214,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1OX-8K-yXr">
                         <rect key="frame" x="0.0" y="124" width="402" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.32156862749999998" green="0.5568627451" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.32129043340000002" green="0.55658131840000002" blue="0.94772952799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" red="0.32129043340000002" green="0.55658131840000002" blue="0.94772952799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>

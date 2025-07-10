@@ -16,11 +16,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = 80
-        tableView.backgroundColor = .white
-
+ 
+        setupUI()
         reloadSettings()
     }
     
@@ -77,5 +74,14 @@ class SettingsViewController: UIViewController {
 
         present(alert, animated: true)
     }
-
+    
+    func setupUI() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = 80
+        tableView.backgroundColor = .white
+        
+        self.title = "Settings"
+        self.navigationItem.largeTitleDisplayMode = .always
+    }
 }

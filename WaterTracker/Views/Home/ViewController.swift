@@ -97,6 +97,9 @@ class ViewController: UIViewController {
     }
     
     func setupUI() {
+        self.title = "Water Tracker"
+        self.navigationItem.largeTitleDisplayMode = .always
+        
         progressBarView.layer.cornerRadius = 5
         goalBarView.layer.cornerRadius = 5
         
