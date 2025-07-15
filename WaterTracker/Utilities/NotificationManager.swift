@@ -7,6 +7,7 @@
 
 import Foundation
 import UserNotifications
+import UserDefaultsHelper
 
 class NotificationManager {
     static let shared = NotificationManager()
@@ -27,7 +28,7 @@ class NotificationManager {
     }
     
     func scheduleWaterRemindersIfNeeded() {
-        let hasScheduled = UserDefaults.standard.bool(forKey: UserDefaultsKeys.didScheduleNotifications)
+        let hasScheduled = UserDefaultsHelper.load(Bool.self, forKey: UserDefaultsKeys.didScheduleNotifications) ?? false
         
         guard !hasScheduled else { return }
         
@@ -54,6 +55,6 @@ class NotificationManager {
             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
         }
         
-        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.didScheduleNotifications)
+        UserDefaultsHelper.save(true, forKey: UserDefaultsKeys.didScheduleNotifications)
     }
 }

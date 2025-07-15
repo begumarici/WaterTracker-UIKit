@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+import UserDefaultsHelper
 
 class SettingsViewModel {
     
@@ -27,30 +28,28 @@ class SettingsViewModel {
     
     var dailyGoal: Int {
         get {
-            let goal = UserDefaults.standard.integer(forKey: UserDefaultsKeys.dailyGoal)
-            return goal == 0 ? defaultGoal : goal
+            return UserDefaultsHelper.load(Int.self, forKey: UserDefaultsKeys.dailyGoal) ?? defaultGoal
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.dailyGoal)
+            UserDefaultsHelper.save(newValue, forKey: UserDefaultsKeys.dailyGoal)
         }
     }
     
     var cupSize: Int {
         get {
-            let value = UserDefaults.standard.integer(forKey: UserDefaultsKeys.cupSize)
-            return value == 0 ? defaultCupSize : value
+            return UserDefaultsHelper.load(Int.self, forKey: UserDefaultsKeys.cupSize) ?? defaultCupSize
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.cupSize)
+            UserDefaultsHelper.save(newValue, forKey: UserDefaultsKeys.cupSize)
         }
     }
     
     var notificationsEnabled: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: UserDefaultsKeys.notificationsEnabled)
+            return UserDefaultsHelper.load(Bool.self, forKey: UserDefaultsKeys.notificationsEnabled) ?? false
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.notificationsEnabled)
+            UserDefaultsHelper.save(newValue, forKey: UserDefaultsKeys.notificationsEnabled)
             if newValue {
                 NotificationManager.shared.requestPermission { granted in
                     if granted {
@@ -63,14 +62,14 @@ class SettingsViewModel {
                 }
             } else {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-                UserDefaults.standard.set(false, forKey: UserDefaultsKeys.didScheduleNotifications)
+                UserDefaultsHelper.save(false, forKey: UserDefaultsKeys.didScheduleNotifications)
             }
         }
     }
     
     func resetProgress() {
-        UserDefaults.standard.set(0, forKey: UserDefaultsKeys.currentIntake)
-        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastIntakeDate)
+        UserDefaultsHelper.save(0, forKey: UserDefaultsKeys.currentIntake)
+        UserDefaultsHelper.remove(forKey: UserDefaultsKeys.lastIntakeDate)
         NotificationCenter.default.post(name: .didResetIntake, object: nil)
     }
     
@@ -79,5 +78,4 @@ class SettingsViewModel {
         resetProgress()
         NotificationCenter.default.post(name: .didUpdateDailyGoal, object: nil)
     }
-    
 }

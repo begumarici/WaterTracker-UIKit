@@ -1,0 +1,15 @@
+{
+  "originHash" : "b77debe69ad7c2983aa2c88d468e27504fa8694aea3278cd9e67fdf638147288",
+  "pins" : [
+    {
+      "identity" : "userdefaultshelper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/begumarici/UserDefaultsHelper.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5c78f7dbd81a4ce4f84171013bae2bd1f1f7145f"
+      }
+    }
+  ],
+  "version" : 3
+}

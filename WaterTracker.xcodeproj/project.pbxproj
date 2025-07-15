@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		54ADE9322E2640FE00F013B6 /* UserDefaultsHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 54ADE9312E2640FE00F013B6 /* UserDefaultsHelper */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		548905152E0AD37A00D6F80F /* WaterTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54ADE9322E2640FE00F013B6 /* UserDefaultsHelper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = WaterTracker;
 			packageProductDependencies = (
+				54ADE9312E2640FE00F013B6 /* UserDefaultsHelper */,
 			);
 			productName = WaterTracker;
 			productReference = 548905152E0AD37A00D6F80F /* WaterTracker.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 5489050C2E0AD37A00D6F80F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				54ADE9302E2640FE00F013B6 /* XCRemoteSwiftPackageReference "UserDefaultsHelper" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 548905162E0AD37A00D6F80F /* Products */;
 			projectDirPath = "";
@@ -343,6 +352,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		54ADE9302E2640FE00F013B6 /* XCRemoteSwiftPackageReference "UserDefaultsHelper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/begumarici/UserDefaultsHelper.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		54ADE9312E2640FE00F013B6 /* UserDefaultsHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54ADE9302E2640FE00F013B6 /* XCRemoteSwiftPackageReference "UserDefaultsHelper" */;
+			productName = UserDefaultsHelper;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5489050D2E0AD37A00D6F80F /* Project object */;
 }

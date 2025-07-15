@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import UserDefaultsHelper
 
 class WaterViewModel {
     
@@ -16,81 +17,77 @@ class WaterViewModel {
     private let defaultIntake: Float = 0
     
     private var cupSize: Float {
-        let stored = UserDefaults.standard.integer(forKey: UserDefaultsKeys.cupSize)
-        return stored == 0 ? 250 : Float(stored)
+        let stored = UserDefaultsHelper.load(Int.self, forKey: UserDefaultsKeys.cupSize) ?? 250
+        return Float(stored)
     }
     
     var progress: Float {
         return min(waterData.currentIntake / waterData.dailyGoal, 1.0)
     }
+
     var lastIntakeDate: Date? {
-        UserDefaults.standard.object(forKey: UserDefaultsKeys.lastIntakeDate) as? Date
+        UserDefaultsHelper.load(Date.self, forKey: UserDefaultsKeys.lastIntakeDate)
     }
     
     init() {
         Self.resetIfNewDay()
         
-        let goal = Float(UserDefaults.standard.integer(forKey: UserDefaultsKeys.dailyGoal))
-        let intake = UserDefaults.standard.float(forKey: UserDefaultsKeys.currentIntake)
-        self.waterData = WaterData(currentIntake: intake, dailyGoal: goal == 0 ? defaultGoal : goal)
+        let goal = Float(UserDefaultsHelper.load(Int.self, forKey: UserDefaultsKeys.dailyGoal) ?? Int(defaultGoal))
+        let intake = UserDefaultsHelper.load(Float.self, forKey: UserDefaultsKeys.currentIntake) ?? defaultIntake
+        self.waterData = WaterData(currentIntake: intake, dailyGoal: goal)
     }
     
     private static func resetIfNewDay() {
-        
         let today = Calendar.current.startOfDay(for: Date())
         
-        if let lastDate = UserDefaults.standard.object(forKey: UserDefaultsKeys.lastOpenedDate) as? Date {
+        if let lastDate = UserDefaultsHelper.load(Date.self, forKey: UserDefaultsKeys.lastOpenedDate) {
             let lastOpenedDay = Calendar.current.startOfDay(for: lastDate)
             if lastOpenedDay != today {
-                UserDefaults.standard.set(0.0, forKey: UserDefaultsKeys.currentIntake)
+                UserDefaultsHelper.save(0.0, forKey: UserDefaultsKeys.currentIntake)
                 NotificationCenter.default.post(name: .didResetIntake, object: nil)
-                UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastIntakeDate)
+                UserDefaultsHelper.remove(forKey: UserDefaultsKeys.lastIntakeDate)
             }
         }
-        UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastOpenedDate)
-        
+        UserDefaultsHelper.save(Date(), forKey: UserDefaultsKeys.lastOpenedDate)
     }
+    
     func increaseIntake(by amount: Float? = nil) {
-        if waterData.currentIntake >= waterData.dailyGoal {
-            return
-        }
+        if waterData.currentIntake >= waterData.dailyGoal { return }
 
         let intakeAmount = amount ?? cupSize
         let newIntake = min(waterData.currentIntake + intakeAmount, waterData.dailyGoal)
 
         if newIntake > waterData.currentIntake {
             waterData.currentIntake = newIntake
-            UserDefaults.standard.set(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
-            UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastIntakeDate)
+            UserDefaultsHelper.save(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
+            UserDefaultsHelper.save(Date(), forKey: UserDefaultsKeys.lastIntakeDate)
         }
     }
     
     func decreaseIntake(by amount: Float? = nil) {
         let intakeAmount = amount ?? cupSize
-        if waterData.currentIntake - intakeAmount < 0 {
-            return
-        }
-        let newIntake = min(waterData.currentIntake - intakeAmount, waterData.dailyGoal)
+        if waterData.currentIntake - intakeAmount < 0 { return }
 
+        let newIntake = min(waterData.currentIntake - intakeAmount, waterData.dailyGoal)
         if newIntake < waterData.currentIntake {
             waterData.currentIntake = newIntake
-            UserDefaults.standard.set(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
+            UserDefaultsHelper.save(waterData.currentIntake, forKey: UserDefaultsKeys.currentIntake)
         }
     }
     
     func resetIntake() {
         waterData.currentIntake = defaultIntake
-        UserDefaults.standard.set(defaultIntake, forKey: UserDefaultsKeys.currentIntake)
+        UserDefaultsHelper.save(defaultIntake, forKey: UserDefaultsKeys.currentIntake)
     }
     
     func updateGoal(_ newGoal: Float) {
         waterData.dailyGoal = newGoal
-        UserDefaults.standard.set(newGoal, forKey: UserDefaultsKeys.dailyGoal)
+        UserDefaultsHelper.save(newGoal, forKey: UserDefaultsKeys.dailyGoal)
     }
     
     func reloadData() {
-        let goal = Float(UserDefaults.standard.integer(forKey: UserDefaultsKeys.dailyGoal))
-        let intake = UserDefaults.standard.float(forKey: UserDefaultsKeys.currentIntake)
-        waterData = WaterData(currentIntake: intake, dailyGoal: goal == 0 ? defaultGoal : goal)
+        let goal = Float(UserDefaultsHelper.load(Int.self, forKey: UserDefaultsKeys.dailyGoal) ?? Int(defaultGoal))
+        let intake = UserDefaultsHelper.load(Float.self, forKey: UserDefaultsKeys.currentIntake) ?? defaultIntake
+        waterData = WaterData(currentIntake: intake, dailyGoal: goal)
     }
 }
